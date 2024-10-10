@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第一幕：初见</title>
+    <style>
+    @keyframes moveRight {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(550px) translateY(-400px);
+    }
+    }
+    @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+    #myImage {
+    position: absolute;
+    top: 700px;
+    left: 0;
+    width: 500px;
+    height: 300px;
+    transform: rotate(180deg);
+    animation: moveRight 3s ease-in-out forwards;
+    }
+    #myImage2 {
+    position: absolute;
+    top: 700px;
+    left: 50px;
+    width: 200px;
+    height: 200px;
+    opacity: 100%;
+    animation: moveRight 3s ease-in-out forwards;
+    }
+    #myImage3 {
+    position:absolute;
+    top: 260px;
+    left: 900px;
+    width: 300px;
+    height: 300px;
+    animation: fadeInOut 5s forwards;
+    }
+
+    .btext{
+      width: 25%;
+      height: 100%;
+      position:absolute;
+      font-size: 24px;
+      margin: 0%;
+      left: 75%;
+      text-align: center;
+      font-family: sans-serif;
+      animation: fadeInOut 5s forwards;
+    }
+
+    .my-button {
+      background-color: #66a4eb;
+      color: white;
+      width: 300px;
+      height: 100px;
+      display: inline-block;
+      text-align: center;
+      font-size: 24px;
+      font-family: sans-serif;
+      margin: 10px;
+      border-radius: 15px;
+      animation: fadeInOut 5s forwards;
+    }
+    
+    body{
+        background-image: url(images/stage1-back.jpg);
+        background-position: 0%;
+        background-size: 75%;
+        background-repeat: no-repeat;
+
+    }
+
+    </style>
+</head>
+<body>
+<audio id="music" src="music/lover.mp3" controls autoplay hidden></audio>
+<img id="myImage" src="images/car.png">
+<img id="myImage2" src="images/boy.jpg">
+<img id="myImage3" src="images/girl.gif">
+
+<div class="btext">
+  <h1>陈川请听题</h1>
+  <p>此时的陈川看到阿金骑着电瓶车飞驰而来</p>
+  <p>她说的第一句话是什么？</p>
+  <button class="my-button" id='wrongButton1'>帅哥你来啦？</button>
+  <button class="my-button" id='wrongButton2'>就你叫巨傻逼？</button>
+  <button class="my-button" id='rightButton'>......（没看到人）</button>
+  <button class="my-button" id='wrongButton3'>你怎么认出我的？</button>
+</div>
+
+<script>
+  document.getElementById('wrongButton1').onclick = function() {
+    window.location.href = 'wrongtest.html';
+  };
+  document.getElementById('wrongButton2').onclick = function() {
+    window.location.href = 'wrongtest.html';
+  };
+  document.getElementById('wrongButton3').onclick = function() {
+    window.location.href = 'wrongtest.html';
+  };
+
+  document.getElementById('rightButton').onclick = function() {
+    window.location.href = 'stage2.html';
+  };
+</script>
+
+<script>
+  var music = document.getElementById("music");
+  var currentTime = 0;
+
+  // 监听音乐播放事件
+  music.addEventListener("timeupdate", function() {
+  currentTime = music.currentTime;
+  });
+
+  // 监听页面离开事件
+  window.addEventListener("beforeunload", function() {
+  sessionStorage.setItem("currentTime", currentTime);
+  });
+
+  // 监听页面加载事件
+  window.addEventListener("load", function() {
+  var storedTime = sessionStorage.getItem("currentTime");
+  if (storedTime) {
+      music.currentTime = parseFloat(storedTime);
+      music.play();
+  }
+  });
+</script>
+</body>
+</html> 

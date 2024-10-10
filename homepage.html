@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>主页</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        @keyframes fadeInOut {
+        0% {
+        opacity: 0;
+        }
+        100% {
+        opacity: 1;
+        }
+        }
+        .box{
+            display: flex;
+            height: 5 vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .text{
+            margin-left: 10px;
+        }
+
+        .container{
+            display: flex;
+            height: 800px;
+        }
+
+        .block{
+            width: 25%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 3%
+        }
+        .block-1{
+            background-image: url('images/spring.jpeg');
+            background-size: cover;
+            opacity: 0.7;
+            font-size: 56px;
+            font-family:sans-serif;
+            color: black;
+        }
+        .block-2{
+            background-image: url('images/summer.jpeg');
+            background-size: cover;
+            opacity: 0.7;
+            font-size: 56px;
+            font-family:sans-serif;
+            color: black;
+        }
+        .block-3{
+            background-image: url('images/autumn.jpeg');
+            background-size: cover;
+            opacity: 0.7;
+            font-size: 56px;
+            font-family:sans-serif;
+            color: black;
+        }
+        .block-4{
+            background-image: url('images/winter.jpeg');
+            background-size: cover;
+            opacity: 0.7;
+            font-size: 56px;
+            font-family:sans-serif;
+            color: black;
+        }
+
+        .block-1:hover{
+            background: url('img/52.jpg');
+            background-size: contain;
+        }
+        .block-2:hover{
+            background: url('img/50.jpg');
+            background-size: contain;
+
+        }
+        .block-3:hover{
+            background: url('img/37.jpg');
+            background-size: cover;
+        }
+        .block-4:hover{
+            background: url('images/reward.gif');
+            background-size: contain;
+        }
+
+        .block > div{
+            color: white;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .block:hover > div{
+            opacity: 1;
+        }
+
+        .bottom-box{
+            display: flex;
+            height: 20px;
+            align-items: center;
+            justify-content: center;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <audio id="music" src="music/lover.mp3" controls autoplay hidden></audio>
+    <div class="box">
+        <h1 class='text' style="color: black; text-align: center;">陈川向前冲！</h1>
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg);">
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg); animation: fadeInOut 2s forwards;;">
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg); animation: fadeInOut 3s forwards;">
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg); animation: fadeInOut 4s forwards;">
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg); animation: fadeInOut 5s forwards;">
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg); animation: fadeInOut 6s forwards;">
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg); animation: fadeInOut 7s forwards;">
+        <img src="images/run.gif" style="width: 80px; height: 80px; transform: rotateY(180deg); animation: fadeInOut 8s forwards;">
+    </div>
+    <div class="container">
+        <div class="block block-1">第一关</div>
+        <div class="block block-2">第二关</div>
+        <div class="block block-3">第三关</div>
+        <div class="block block-4">最终大奖</div>
+    </div>
+    <br>
+    <div class="bottom-box">
+        <h1 id="start">开始闯关</h1>
+    </div>
+
+
+    <script>
+        document.getElementById('start').onclick = function() {
+        window.location.href = 'stage1.html';
+        };
+    </script>
+
+    <script>
+        var music = document.getElementById("music");
+        var currentTime = 0;
+    
+        // 监听音乐播放事件
+        music.addEventListener("timeupdate", function() {
+        currentTime = music.currentTime;
+        });
+    
+        // 监听页面离开事件
+        window.addEventListener("beforeunload", function() {
+        sessionStorage.setItem("currentTime", currentTime);
+        });
+    
+        // 监听页面加载事件
+        window.addEventListener("load", function() {
+        var storedTime = sessionStorage.getItem("currentTime");
+        if (storedTime) {
+            music.currentTime = parseFloat(storedTime);
+            music.play();
+        }
+        });
+    </script>
+</body>
+</html>

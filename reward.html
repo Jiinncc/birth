@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>抽奖</title>
+  <style>
+    body {
+        background-image: url(images/reward.jpeg);
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+    }
+ 
+    #wheel {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(3, 1fr);
+      gap: 4px;
+      width: 500px;
+      height: 500px;
+    }
+ 
+    .cell {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      width: 100%;
+      height: 100%;
+      background-color: #999; /* 初始颜色，可以根据需要修改 */
+ 
+    }
+    #selectedCell{
+      background-color: rgb(236, 225, 236);
+      cursor: pointer;
+    }
+    .vertical-text {
+      writing-mode: vertical-rl; /* 文字从上到下竖排，从右到左 */
+      font-size: 45px;
+      margin-right: 200px;
+      text-align: center;
+      }
+ 
+  </style>
+  <script>
+    function spinWheel() {
+      var cells = document.getElementsByClassName('cell');
+      //随机选择停止的位置，注意要绕过索引4 即中间的格子
+      do {
+        selectedCellIndex = Math.floor(Math.random() * 9);
+      } while (selectedCellIndex === 4);
+      
+ 
+      // 每次启动时重置所有格子颜色
+      for (var i = 0; i < cells.length; i++) {
+        if(i==4){
+          continue;
+        }
+        cells[i].style.backgroundColor="#999";
+      }
+ 
+      //随机初始化开始的位置
+      do {
+        currentIndex = Math.floor(Math.random() * 9);
+      } while (currentIndex === 4);
+ 
+      var rotationCount = 0; // 计数器，表示转动的次数
+ 
+        function animate() {
+        cells[currentIndex].style.background = ''; // 将背景设置为空
+        cells[currentIndex].style.backgroundSize = '';
+        
+        // 更新索引 保证它是逆时针旋转 并且绕过最中间的小正方形 
+        // 这里注意索引值是0-8 这一步相当于是人工控制了下一步该往哪走
+        switch(currentIndex)
+        {
+          case 0:currentIndex=3;
+          break;
+          case 1:currentIndex=0;
+          break;
+          case 2:currentIndex=1;
+          break;
+          case 3:currentIndex=6;
+          break;
+          case 5:currentIndex=2;
+          break;
+          case 6:currentIndex=7;
+          break;
+          case 7:currentIndex=8;
+          break;
+          case 8:currentIndex=5;
+          break;
+        }
+        
+        // 如果当前格子不是选中的格子，就改变颜色
+        if (currentIndex !== selectedCellIndex || rotationCount<16) {
+          cells[currentIndex].style.backgroundColor = '#00f'; // 表示选中的物品
+ 
+          setTimeout(animate, 100); // 0.1秒后继续
+          // 让轮盘多转几圈，更真实一点，避免出现一开始就停止的情况
+          // 每转一圈计数器加一  
+          rotationCount++;
+          // 如果转动的次数超过一定值，可以停止动画，避免无限递归
+    
+        } else {
+          cells[currentIndex].style.backgroundColor = '#00f'
+           // 设置一个定时器，最后一个格子是选中的格子，等待一段时间后弹窗显示抽中的物品
+          setTimeout(function () {
+              if(selectedCellIndex == 1){
+                alert("恭喜你获得：鲜花");
+              }
+              if(selectedCellIndex == 2){
+                alert("恭喜你获得：蛋糕");
+              }
+              if(selectedCellIndex == 3){
+                alert("谢谢惠顾");
+              }
+              if(selectedCellIndex == 5){
+                alert("恭喜你获得：咖啡兑换券");
+              }
+              if(selectedCellIndex == 6){
+                alert("恭喜你获得：洗袜子兑换券");
+              }
+              if(selectedCellIndex == 7){
+                alert("再来一次");
+              }
+              if(selectedCellIndex == 8){
+                alert("恭喜你获得：滴滴司机兑换券");
+              }
+              if(selectedCellIndex == 0){
+                alert("恭喜你获得：神秘大奖");
+                window.setTimeout(location.href = "drawing.html",3000);
+              }
+          }, 300);
+        }
+ 
+      }
+      animate(); // 开始执行
+    }
+  </script>
+</head>
+ 
+<body>
+    <audio id="music" src="music/lover.mp3" controls autoplay hidden></audio>
+    <h1 class="vertical-text">最终大奖（超级加强版）</h1>
+    <br>
+    <div id="wheel">
+      <div class="cell" >鲜花</div>
+      <div class="cell" >神秘大奖</div>
+      <div class="cell" >蛋糕</div>
+      <div class="cell" >谢谢惠顾</div>
+      <div class="cell" id="selectedCell" onclick="spinWheel()">抽奖</div>
+      <div class="cell" >咖啡券</div>
+      <div class="cell" >洗袜券</div>
+      <div class="cell" >再来一次</div>
+      <div class="cell" >神秘小奖</div>
+    </div>
+
+    <script>
+      var music = document.getElementById("music");
+      var currentTime = 0;
+
+      // 监听音乐播放事件
+      music.addEventListener("timeupdate", function() {
+      currentTime = music.currentTime;
+      });
+
+      // 监听页面离开事件
+      window.addEventListener("beforeunload", function() {
+      sessionStorage.setItem("currentTime", currentTime);
+      });
+
+      // 监听页面加载事件
+      window.addEventListener("load", function() {
+      var storedTime = sessionStorage.getItem("currentTime");
+      if (storedTime) {
+          music.currentTime = parseFloat(storedTime);
+          music.play();
+      }
+      });
+    </script>
+</body>
+</html>

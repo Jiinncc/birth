@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Path Detection</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('images/background_ring.jpeg');
+            background-size: cover;
+            background-color: #f0f0f0;
+        }
+
+        img {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        #canvasContainer {
+            position: relative;
+            display: inline-block;
+        }
+
+        #hint{
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 32px;
+            color: black;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family:'Times New Roman', Times, serif;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="canvasContainer">
+        <div id="hint">请按照太阳的轮廓绘画</div>
+        <canvas id="canvas" width="1000" height="1000"></canvas>
+        <img id="successImage" src="images/ring.png" alt="Success">
+    </div>
+    
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const successImage = document.getElementById('successImage');
+
+        let drawing = false;
+        let points = [];
+
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2 + 120;
+        const radius = 370;
+
+        canvas.addEventListener('mousedown', () => {
+            drawing = true;
+            points = [];
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCircle();
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            drawing = false;
+            if (isCirclePath(points)) {
+                successImage.style.display = 'block';
+            } else {
+                successImage.style.display = 'none';
+            }
+        });
+
+        canvas.addEventListener('mousemove', (event) => {
+            if (!drawing) return;
+            const x = event.offsetX;
+            const y = event.offsetY;
+            points.push({ x, y });
+            ctx.fillStyle = 'black';
+            ctx.fillRect(x, y, 6, 6); // 加粗鼠标轨迹
+        });
+
+        function isCirclePath(points) {
+            if (points.length < 20) return false;
+
+            let totalError = 0;
+            for (let i = 0; i < points.length; i++) {
+                const point = points[i];
+                const dx = point.x - centerX;
+                const dy = point.y - centerY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const error = Math.abs(distance - radius);
+                totalError += error;
+            }
+
+            const avgError = totalError / points.length;
+            return avgError < 20;
+        }
+    </script>
+</body>
+</html>

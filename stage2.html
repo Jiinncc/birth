@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第二幕：升温</title>
+    <style>
+    body{
+        background-image: url(images/stage2-back.jpg);
+        background-repeat: no-repeat;
+        background-attachment:fixed;
+        background-size:75% 100%; 
+    }
+
+    @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+    #myImage {
+    position: absolute;
+    top: 600px;
+    left: 600px;
+    width: 400px;
+    height: 300px;
+    transform: rotateY(180deg);
+    animation: fadeInOut 3s forwards;
+    }
+    #myImage2 {
+    position: absolute;
+    top: 850px;
+    left: 650px;
+    width: 100px;
+    height: 100px;
+    animation: fadeInOut 3s forwards;
+    }
+
+    .btext{
+      width: 25%;
+      height: 100%;
+      position:absolute;
+      font-size: 24px;
+      margin: 0%;
+      left: 75%;
+      text-align: center;
+      font-family: sans-serif;
+      animation: fadeInOut 3s forwards;
+    }
+
+    .my-button {
+      background-color: #66a4eb;
+      color: white;
+      width: 300px;
+      height: 100px;
+      display: inline-block;
+      text-align: center;
+      font-size: 24px;
+      font-family: sans-serif;
+      margin: 10px;
+      border-radius: 15px;
+      animation: fadeInOut 3s forwards;
+    }
+
+    </style>
+</head>
+<body>
+    <img id="myImage" src="images/couple.png">
+    <img id="myImage2" src="images/coffee_lucky.png">
+    <img id="myImage2" src="images/coffee_lucky.png" style="left: 800px;">
+
+    <div class="btext">
+        <h1>陈川请听题</h1>
+        <p>此时的陈川和阿金在操场晒太阳</p>
+        <p>他们喝的是瑞幸的哪一款？</p>
+        <button class="my-button" id='rightButton'>厚乳拿铁&新鸳鸯红茶拿铁</button>
+        <button class="my-button" id='wrongButton1'>生椰拿铁&新鸳鸯红茶拿铁</button>
+        <button class="my-button" id='wrongButton2'>厚乳拿铁&丝绒拿铁</button>
+        <button class="my-button" id='wrongButton3'>生椰拿铁&丝绒拿铁</button>
+      </div>
+
+    <script>
+      document.getElementById('wrongButton1').onclick = function() {
+          window.location.href = 'wrongtest.html';
+      };
+      document.getElementById('wrongButton2').onclick = function() {
+          window.location.href = 'wrongtest.html';
+      };
+      document.getElementById('wrongButton3').onclick = function() {
+          window.location.href = 'wrongtest.html';
+      };
+
+      document.getElementById('rightButton').onclick = function() {
+        window.location.href = 'stage3.html';
+      };
+    </script>
+
+      
+</body>
+</html>

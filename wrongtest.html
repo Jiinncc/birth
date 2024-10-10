@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>随机惩罚</title>
+<style>
+    .btext{
+      width: 100%;
+      height: 100%;
+      position:absolute;
+      font-size: 24px;
+      margin: 0%;
+      top: 200px;
+      text-align: center;
+      font-family: sans-serif;
+    }
+    .btext button {
+      background-color: #86b7f0;
+      color: white;
+      padding: 24px 36px;
+      display: inline-block;
+      text-align: center;
+      font-size: 24px;
+      font-family: sans-serif;
+      margin: 10px;
+      border-radius: 15px;
+    }
+
+    body{
+        background-image: url(/images/punish.jpg);
+        background-repeat: no-repeat;
+        background-attachment:fixed;
+        background-size:100% 100%; 
+    }
+</style>
+
+<script>
+function lotteryDraw() {
+    var participants = ['洗袜子', '捶肩', '请喝奶茶', '贴贴', '鬼脸自拍发给阿金']; // 参与抽奖的人员名单
+    var index = Math.floor(Math.random() * participants.length); // 生成一个随机索引
+    var winner = participants[index]; // 获取随机选中的参与者
+    document.getElementById('lotteryResult').textContent = winner; // 显示获奖者
+}
+</script>
+</head>
+<body>
+<audio id="music" src="music/lover.mp3" controls autoplay hidden></audio>
+<div class="btext">
+    <h1>随机惩罚</h1>
+    <button onclick="lotteryDraw()">点击抽取惩罚</button>
+    <p id="lotteryResult" style="font-family: sans-serif; font-size: 36px;">Result will appear here after drawing.</p>
+    <button id='jumpButton'>返回重新答题</button>
+</div>
+
+<script>
+    document.getElementById('jumpButton').onclick = function() {
+        window.history.back();
+    };
+</script>
+
+<script>
+    var music = document.getElementById("music");
+    var currentTime = 0;
+  
+    // 监听音乐播放事件
+    music.addEventListener("timeupdate", function() {
+    currentTime = music.currentTime;
+    });
+  
+    // 监听页面离开事件
+    window.addEventListener("beforeunload", function() {
+    sessionStorage.setItem("currentTime", currentTime);
+    });
+  
+    // 监听页面加载事件
+    window.addEventListener("load", function() {
+    var storedTime = sessionStorage.getItem("currentTime");
+    if (storedTime) {
+        music.currentTime = parseFloat(storedTime);
+        music.play();
+    }
+    });
+  </script>
+
+</body>
+</html>

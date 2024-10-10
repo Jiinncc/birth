@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第三幕：四季</title>
+    <style>
+    body{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-image: url(images/stage3-back.jpeg);
+        background-size: cover;
+    }
+
+    @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+      transform: translateY(-100px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    }
+    @keyframes sideInOut {
+    0% {
+      opacity: 0;
+      transform: translateX(-300px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    }
+    #box1{
+        width: 24.5%;
+        height: 750px;
+        left: 0 px;
+        top: 135px;
+        background: url("images/stage3_1_1.jpg") no-repeat;
+        background-size: contain;
+        transition: all 1s;
+        position: absolute;
+        animation: fadeInOut 3s forwards;
+    }
+
+    #box2{
+    width: 24.5%;
+    height: 750px;
+    left: 25.5%;
+    top: 135px;
+    background: url("images/stage3_2_1.jpg") no-repeat;
+    background-size: contain;
+    transition: all 1s;
+    position: absolute;
+    animation: fadeInOut 3s forwards;
+    }
+
+    #box3{
+    width: 24.5%;
+    height: 750px;
+    left: 50.5%;
+    top: 135px;
+    background: url("images/stage3_3_1.jpg") no-repeat;
+    background-size: contain;
+    transition: all 1s;
+    position: absolute;
+    animation: fadeInOut 3s forwards;
+    }
+
+    #box4{
+    width: 24.5%;
+    height: 750px;
+    left: 75.5%;
+    top: 135px;
+    background: url("images/stage3_4_1.jpg") no-repeat;
+    background-size: contain;
+    transition: all 1s;
+    position: absolute;
+    animation: fadeInOut 3s forwards;
+    }
+
+    .icon_left{
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 45%;
+        left:20px;
+    }
+    .icon_right{
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        top: 45%;
+        left: 400px;
+    }
+
+    .inline-p{
+        position: relative;
+        display: inline;
+        margin-left: 50px;
+        margin-right: 100px;
+        top: 75%;
+        font-size: 20px;
+        font-family:'Times New Roman', Times, serif;
+        animation: fadeInOut 3s forwards;
+    }
+    .my-button {
+    position: relative;
+    background-color: #66a4eb;
+    color: white;
+    width: 120px;
+    height: 55px;
+    top: 750px;
+    font-size: 30px;
+    font-family: sans-serif;
+    border-radius: 15px;
+    animation: fadeInOut 3s forwards;
+    }
+    </style>
+</head>
+<body>
+<audio id="music" src="music/lover.mp3" controls autoplay hidden></audio>
+<div id="box1">
+    <img class="icon_left" src="images/left.png" onclick="icon_left(1)">
+    <img class="icon_right" src="images/right.png" onclick="icon_right(1)">
+</div>
+
+<div id="box2">
+    <img class="icon_left" src="images/left.png" onclick="icon_left(2)">
+    <img class="icon_right" src="images/right.png" onclick="icon_right(2)">
+</div>
+
+<div id="box3">
+    <img class="icon_left" src="images/left.png" onclick="icon_left(3)">
+    <img class="icon_right" src="images/right.png" onclick="icon_right(3)">
+</div>
+
+<div id="box4">
+    <img class="icon_left" src="images/left.png" onclick="icon_left(4)">
+    <img class="icon_right" src="images/right.png" onclick="icon_right(4)">
+</div>
+
+<h1 style="text-align: center; top: 100px;">请输入下列图片所在城市</h1>
+<p class="inline-p">图片1:<input type="text" id="inputSpring"></p>
+<p class="inline-p">图片2:<input type="text" id="inputSummer"></p>
+<p class="inline-p">图片3:<input type="text" id="inputAutumn"></p>
+<p class="inline-p">图片4:<input type="text" id="inputWinter"></p>
+<h2 style="text-align: center;"><button class="my-button" onclick="checkContent()">确认</button></h2>
+
+<script>
+    var i=1;//表示当前图片所在位置
+    function icon_left(param){
+        if(i<=1){
+            i=2;
+        }else{
+            i=i-2;
+        }
+        console.info(i)
+        showImg(param)
+    }
+    function icon_right(param){
+        showImg(param)
+    }
+    function showImg(param) { //让背景图片显示
+        i++;
+        if(i == 4) {
+            i = 1;
+        }
+        document.getElementById("box"+param).style.background = "url(images/stage3_" + param + "_" + i + ".jpg) no-repeat";
+        document.getElementById("box"+param).style.backgroundSize = "contain";
+        //通过id获取标签并修改背景样式
+    }
+</script>
+
+<script>
+    function checkContent(){
+        var inputSpring = document.getElementById("inputSpring").value;
+        var inputSummer = document.getElementById("inputSummer").value;
+        var inputAutumn = document.getElementById("inputAutumn").value;
+        var inputWinter = document.getElementById("inputWinter").value;
+        if (inputSpring === '泉州' && inputSummer === '南京' && inputAutumn === '宁波' && inputWinter === '温州' ){
+            window.location.href = "picwall.html";}
+        else {
+            window.location.href = "wrongtest.html";
+        }
+    }
+</script>
+
+<script>
+    var music = document.getElementById("music");
+    var currentTime = 0;
+  
+    // 监听音乐播放事件
+    music.addEventListener("timeupdate", function() {
+    currentTime = music.currentTime;
+    });
+  
+    // 监听页面离开事件
+    window.addEventListener("beforeunload", function() {
+    sessionStorage.setItem("currentTime", currentTime);
+    });
+  
+    // 监听页面加载事件
+    window.addEventListener("load", function() {
+    var storedTime = sessionStorage.getItem("currentTime");
+    if (storedTime) {
+        music.currentTime = parseFloat(storedTime);
+        music.play();
+    }
+    });
+  </script>
+
+</body>
+</html>
