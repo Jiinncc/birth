@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Upload entire repository
-          path: 'https://github.com/Jiinncc/birth/blob/main/homepage.html'
+          path: 'github.com/Jiinncc/birth/blob/main/homepage.html'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
